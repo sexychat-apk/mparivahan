@@ -1,1 +1,155 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextGen App Portal</title>
+  <meta name="description" content="NextGen App Portal - Apps aur games ek jagah">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+    }
+    .app-card {
+      transition: transform .2s, box-shadow .2s;
+    }
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px #00000012;
+    }
+  </style>
+</head>
+<body class="text-slate-800">
+
+  <header class="bg-blue-700 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-5 py-5 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <h1 class="text-2xl font-bold">🚀 NextGen App Portal</h1>
+        <p class="text-blue-100 text-sm">Your apps, all in one place</p>
+      </div>
+      <button onclick="toggleLanguage()"
+        class="bg-white text-blue-700 px-4 py-2 rounded-xl font-semibold">
+        हिंदी / English
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-5 py-10">
+    <section class="text-center mb-10">
+      <h2 id="heading" class="text-3xl md:text-4xl font-bold mb-3">
+        Apni pasand ke apps khojein
+      </h2>
+      <p id="subtitle" class="text-slate-500 mb-6">
+        Apps aur games ko aasani se explore karein.
+      </p>
+
+      <input id="search" type="search"
+        placeholder="App search karein..."
+        oninput="searchApps()"
+        class="w-full max-w-xl p-4 rounded-2xl border border-slate-200 shadow-sm outline-none focus:ring-2 focus:ring-blue-500">
+    </section>
+
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
+      <h3 id="appsHeading" class="text-xl font-bold">Popular Apps</h3>
+      <span class="text-sm text-slate-500">App Portal</span>
+    </div>
+
+    <section id="appList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <article class="app-card bg-white rounded-2xl p-6 border border-slate-100"
+        data-name="photo editor">
+        <div class="text-4xl mb-4">📸</div>
+        <h4 class="text-xl font-bold mb-2">Photo Editor</h4>
+        <p class="text-slate-500 mb-5">Photos ko edit aur enhance karein.</p>
+        <a href="#" onclick="alert('Yahan apne app ka download link add karein.'); return false;"
+          class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl">
+          Download App
+        </a>
+      </article>
+
+      <article class="app-card bg-white rounded-2xl p-6 border border-slate-100"
+        data-name="music player">
+        <div class="text-4xl mb-4">🎵</div>
+        <h4 class="text-xl font-bold mb-2">Music Player</h4>
+        <p class="text-slate-500 mb-5">Apna favourite music sunein.</p>
+        <a href="#" onclick="alert('Yahan apne app ka download link add karein.'); return false;"
+          class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl">
+          Download App
+        </a>
+      </article>
+
+      <article class="app-card bg-white rounded-2xl p-6 border border-slate-100"
+        data-name="utility tools">
+        <div class="text-4xl mb-4">🛠️</div>
+        <h4 class="text-xl font-bold mb-2">Utility Tools</h4>
+        <p class="text-slate-500 mb-5">Roz ke kaam ke useful tools.</p>
+        <a href="#" onclick="alert('Yahan apne app ka download link add karein.'); return false;"
+          class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl">
+          Download App
+        </a>
+      </article>
+
+    </section>
+
+    <p id="noResults" class="hidden text-center py-10 text-slate-500">
+      Koi app nahi mila.
+    </p>
+
+    <section class="mt-12 bg-white rounded-2xl p-6 md:p-8">
+      <h3 class="text-2xl font-bold mb-3">About NextGen</h3>
+      <p class="text-slate-600 leading-7">
+        NextGen App Portal par aap apne apps aur projects ko ek hi jagah
+        showcase kar sakte hain. Download button mein apni asli file ka link
+        zaroor add karein.
+      </p>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-300 text-center p-6 mt-10">
+    <p>© <span id="year"></span> NextGen App Portal. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let hindi = false;
+
+    function searchApps() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const cards = document.querySelectorAll(".app-card");
+      let visible = 0;
+
+      cards.forEach(card => {
+        const match = card.dataset.name.toLowerCase().includes(query)
+          || card.innerText.toLowerCase().includes(query);
+        card.style.display = match ? "" : "none";
+        if (match) visible++;
+      });
+
+      document.getElementById("noResults")
+        .classList.toggle("hidden", visible !== 0);
+    }
+
+    function toggleLanguage() {
+      hindi = !hindi;
+      document.getElementById("heading").innerText = hindi
+        ? "Apni pasand ke apps khojein"
+        : "Apni pasand ke apps khojein";
+      document.getElementById("subtitle").innerText = hindi
+        ? "Apps aur games ko aasani se explore karein."
+        : "Explore apps and games in one place.";
+      document.getElementById("appsHeading").innerText = hindi
+        ? "Popular Apps"
+        : "Popular Apps";
+      document.getElementById("search").placeholder = hindi
+        ? "App search karein..."
+        : "Search apps...";
+    }
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>
+
